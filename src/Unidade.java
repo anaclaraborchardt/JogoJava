@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public abstract class Unidade {
 
-    int quantidadeDefesa;
-    int quantidadeVidas;
     int tipoDano;
     ArrayList<String> tipoDanos = new ArrayList<>();
 
@@ -34,6 +32,7 @@ public abstract class Unidade {
 
     protected abstract Posicao getPosicao();
 
-
-
+    public void setTipoDano(int tipoDano) {
+        this.tipoDano = tipoDano;
+    }
 }

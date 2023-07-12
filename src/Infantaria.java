@@ -13,50 +13,10 @@ public class Infantaria extends Unidade{
         tipoDano = this.tipoDano;
     }
 
-    public Infantaria(int quantidadeCasas, int posicaoMover) {
-        super();
-    }
 
+    @Override
     public ArrayList<Posicao> movimentos(Campo campo) {
-        ArrayList<Posicao> movimentos = new ArrayList<>();
-        Posicao posicaoAtual = this.getPosicao();
-        int posicaoJogo = campo.getPosicao().indexOf(posicaoAtual);
-        ArrayList<Posicao> posicoesJogo = campo.getPosicao();
-
-        if ((posicaoMover == 12 && quantidadeCasas == 1) ||
-                (posicaoMover == 13 && quantidadeCasas == 1) ||
-                (posicaoMover == 16 && quantidadeCasas == 1) ||
-                (posicaoMover == 17 && quantidadeCasas == 1) ||
-                (posicaoMover == 18 && quantidadeCasas == 1) ||
-                (posicaoMover == 19 && quantidadeCasas == 1) ||
-                (posicaoMover == 22 && quantidadeCasas == 1) ||
-                (posicaoMover == 23 && quantidadeCasas == 1) ||
-                (posicaoMover == 60 && quantidadeCasas == 1) ||
-                (posicaoMover == 61 && quantidadeCasas == 1) ||
-                (posicaoMover == 64 && quantidadeCasas == 1) ||
-                (posicaoMover == 65 && quantidadeCasas == 1) ||
-                (posicaoMover == 66 && quantidadeCasas == 1) ||
-                (posicaoMover == 67 && quantidadeCasas == 1) ||
-                (posicaoMover == 70 && quantidadeCasas == 1) ||
-                (posicaoMover == 71 && quantidadeCasas == 1)) {
-
-            if (identificaPeca(posicaoAtual)) {
-                for (int i = 1; i <= quantidadeCasas; i++) {
-                    if (posicaoJogo + i < posicoesJogo.size()) {
-                        movimentos.add(posicoesJogo.get(posicaoJogo + i));
-                    }
-                }
-            } else {
-                return null;
-            }
-        }
-
-        return movimentos;
-    }
-
-    private boolean identificaPeca(Posicao posicao) {
-        Unidade unidade = posicao.getUnidade();
-        return unidade instanceof Infantaria;
+        return null;
     }
 
     @Override
@@ -77,38 +37,60 @@ public class Infantaria extends Unidade{
     public void atacarCavalaria(Campo campo, int posicaoOrigem, int posicaoDestino) {
         Posicao posicao = campo.getMovimento(posicaoOrigem);
         Unidade unidadeOrigem = posicao.getUnidade();
-        if (unidadeOrigem instanceof Infantaria){
+
+        if (unidadeOrigem instanceof Infantaria) {
             if (posicaoDestino >= 0 && posicaoDestino < campo.getPosicao().size()) {
                 Posicao posicaoDestinoAtaque = campo.getMovimento(posicaoDestino);
 
                 if (posicaoDestinoAtaque.getUnidade() instanceof Cavalaria) {
-                    System.out.println("Unidade de cavalaria encontrada.");
+                    System.out.println("Unidade de Cavalaria encontrada.");
 
-                    int posicaoFrente = posicaoOrigem + 6;
-                    Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoFrente);
-                    if (posicaoFrenteUnidade.getUnidade() instanceof Cavalaria) {
-                        System.out.println("Cavalaria encontrada na posição à frente.");
+                    // O dano 1 é a espada e só ataca o que está do lado direito
+                    if (tipoDano == 1) {
+                        int posicaoFrente = posicaoOrigem + 1;
+                        Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoFrente);
+                        if (posicaoFrenteUnidade.getUnidade() instanceof Cavalaria) {
+                            System.out.println("Infantaria encontrada na posição à frente.");
 
-                        // Realiza o ataque
-                        posicaoDestinoAtaque.setUnidade(unidadeOrigem);
-                        posicao.setUnidade(null);
-                        posicaoFrenteUnidade.setUnidade(null);
+                            // Realiza o ataque
+                            posicaoDestinoAtaque.setUnidade(unidadeOrigem);
+                            posicao.setUnidade(null);
+                            posicaoFrenteUnidade.setUnidade(null);
 
-                        Unidade infantaria = unidadeOrigem;
-                        posicaoDestinoAtaque.setUnidade(infantaria);
+                            Unidade infantaria = unidadeOrigem;
+                            posicaoDestinoAtaque.setUnidade(infantaria);
 
+                            System.out.println("Cavalaria atacada");
+                        }
 
-                        System.out.println("cavalaria atacada");
+                        //O dano 2 é a bomba e só ataca o que está do lado esquerdo
+                    } else if (tipoDano == 2) {
+                        int posicaoFrente2 = posicaoOrigem -1;
+                        Posicao posicaoFrenteUnidade2 = campo.getMovimento(posicaoFrente2);
+
+                        if (posicaoFrenteUnidade2.getUnidade() instanceof Cavalaria) {
+                            System.out.println("Cavalaria encontrada na posição à frente.");
+
+                            // Realiza o ataque
+                            posicaoDestinoAtaque.setUnidade(unidadeOrigem);
+                            posicao.setUnidade(null);
+                            posicaoFrenteUnidade2.setUnidade(null);
+
+                            Unidade infantaria = unidadeOrigem;
+                            posicaoDestinoAtaque.setUnidade(infantaria);
+
+                            System.out.println("Infantaria atacada");
+                        }
                     } else {
-                        System.out.println("Não há cavalaria na posição à frente. O ataque não pode ser realizado.");
+                        System.out.println("Tipo de dano inválido.");
                     }
                 } else {
-                    System.out.println("Posição de destino não contém uma unidade de cavalaria.");
+                    System.out.println("Posição de destino não contém uma unidade de infantaria.");
                 }
             } else {
                 System.out.println("Posição de destino inválida.");
             }
-
         }
     }
 }
+

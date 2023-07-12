@@ -7,16 +7,23 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Campo campo = new Campo();
         Posicao posicaoOrigem2 = new Posicao();
+        Jogador jogador = new Jogador();
+        int jogadorAtual = 1;
 
         Infantaria infantaria = new Infantaria();
         Cavalaria cavalaria = new Cavalaria();
         Arqueiros arqueiros = new Arqueiros();
 
         do {
+            Posicao posicao2 = new Posicao();
+                int indice = campo.getPosicao().indexOf(posicao2);
+
+            System.out.println("Jogador " + jogadorAtual);
+            System.out.println(jogadorAtual == 1 ? jogador.unidadesJogador1 : jogador.unidadesJogador2);
             campo.imprimirJogo();
 
             //implementar a rodada
-            System.out.println("Qual posição deseja mover? (Digite o índice da peça)");
+            System.out.println("Qual posição deseja mover? (Digite o índice da peça).");
             int posicaoOrigem = sc.nextInt();
 
             System.out.println("Para qual posição você deseja ir? (Digite o índice de destino)");
@@ -35,23 +42,21 @@ public class Main {
                     System.out.println("Cavalaria" + cavalaria.tipoDanos);
                     int tipoDano = sc.nextInt();
                     cavalaria.tipoDano = tipoDano;
+                    cavalaria.setTipoDano(tipoDano);
 
-                    Posicao posicaoOrigem3 = campo.getMovimento(posicaoOrigem);
-                    posicaoOrigem3.atacarInfantaria(campo, posicaoOrigem, posicaoPecaAtaque);
+                    cavalaria.atacarInfantaria(campo, posicaoOrigem, posicaoPecaAtaque);
+                    arqueiros.atacarInfantariaCavalaria(campo,posicaoOrigem,posicaoPecaAtaque);
+
                 } else if (peca == 2) {
+
                     System.out.println("Qual dano você quer utilizar? \n");
                     System.out.println("Infantaria" + infantaria.tipoDanos);
                     int tipoDano = sc.nextInt();
                     infantaria.tipoDano = tipoDano;
+                    infantaria.setTipoDano(tipoDano);
 
-                    //passar o dano
-//                    if(tipoDano == 1){
-//
-//                    }else if(tipoDano ==2){
-//
-//                    }
-                    Posicao posicaoOrigem3 = campo.getMovimento(posicaoOrigem);
-                    posicaoOrigem3.atacarCavalaria(campo, posicaoOrigem, posicaoPecaAtaque);
+                    infantaria.atacarCavalaria(campo, posicaoOrigem, posicaoPecaAtaque);
+                    arqueiros.atacarInfantariaCavalaria(campo,posicaoOrigem,posicaoPecaAtaque);
 
                 }
 
@@ -63,6 +68,13 @@ public class Main {
                 } else {
                     System.out.println("A posição de origem é inválida.");
                 }
+            }
+            if (jogadorAtual == 1) {
+                jogadorAtual = 2;
+                jogador.setUnidades(jogador.unidadesJogador2);
+            } else if (jogadorAtual == 2) {
+                jogadorAtual = 1;
+                jogador.setUnidades(jogador.unidadesJogador1);
             }
 
 
