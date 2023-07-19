@@ -87,17 +87,7 @@ public class Main {
 
         System.out.println("\nQual posição deseja mover ou atacar? (Digite o índice da peça).");
         int posicaoOrigem = sc.nextInt();
-        if (jogadorAtual == 1) {
-            if (posicaoOrigem < 6 || posicaoOrigem > 22) {
-                System.out.println("Jogador 1: Essas não são suas peças");
-                return null;
-            }
-        } else if (jogadorAtual == 2) {
-            if (posicaoOrigem < 59 || posicaoOrigem > 77) {
-                System.out.println("Jogador 2: Essas não são suas peças");
-                return null;
-            }
-        }
+
         if (jogadorAtual == 1) {
             jogadorAtual = 2;
             jogador.setUnidades(jogador.unidadesJogador2);

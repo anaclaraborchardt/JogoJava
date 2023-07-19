@@ -74,6 +74,15 @@ public class Infantaria extends Unidade{
                             System.out.println("Infantaria atacada");
                         }
                     }
+
+                }else if (posicaoDestinoAtaque.getUnidade() instanceof Tesouro) {
+                    Tesouro tesouro = new Tesouro();
+                    Jogador jogador = new Jogador();
+                    if(Main.jogadorAtual ==1){
+                        jogador.unidadesJogador2.remove(tesouro);
+                    }else{
+                        jogador.unidadesJogador1.remove(tesouro);
+                    }
                 }
             }
         }
@@ -113,5 +122,6 @@ public class Infantaria extends Unidade{
         }
         }
     }
+
 
 }

@@ -72,7 +72,14 @@ public class Cavalaria extends Unidade {
                         }
                     } else {
                     }
-                } else {
+                } else if (posicaoDestinoAtaque.getUnidade() instanceof Tesouro) {
+                    Tesouro tesouro = new Tesouro();
+                    Jogador jogador = new Jogador();
+                    if(Main.jogadorAtual ==1){
+                        jogador.unidadesJogador2.remove(tesouro);
+                    }else{
+                        jogador.unidadesJogador1.remove(tesouro);
+                    }
                 }
             } else {
             }
