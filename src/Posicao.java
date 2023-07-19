@@ -9,8 +9,6 @@ public class Posicao {
     public void setUnidade(Unidade unidade) {
         this.unidade = unidade;
     }
-
-
 }
 
 

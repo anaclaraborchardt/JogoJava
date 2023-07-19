@@ -3,11 +3,14 @@ import java.util.Scanner;
 
 public class Main {
 
+    static Scanner sc = new Scanner(System.in);
+    static Jogador jogador = new Jogador();
+    static int jogadorAtual = 1;
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+
         Campo campo = new Campo();
-        Jogador jogador = new Jogador();
-        int jogadorAtual = 1;
+
 
         Infantaria infantaria = new Infantaria();
         Cavalaria cavalaria = new Cavalaria();
@@ -15,24 +18,15 @@ public class Main {
 
         do {
 
-            System.out.println("Jogador " + jogadorAtual);
-            System.out.println(jogadorAtual == 1 ? jogador.unidadesJogador1 : jogador.unidadesJogador2);
-            campo.imprimirJogo();
+            Integer posicaoOrigem = null;
+            do{
+                campo.imprimirJogo();
+                defineGanhador();
+                System.out.println(jogador.unidadesJogador1);
+                posicaoOrigem = mover();
+            }while(posicaoOrigem == null);
 
-            //implementar a rodada
-            System.out.println("Qual posição deseja mover? (Digite o índice da peça).");
-            int posicaoOrigem = sc.nextInt();
-                if(jogadorAtual == 1) {
-                    if (posicaoOrigem < 6 || posicaoOrigem > 22) {
-                        System.out.println("Jogador 1: Essas não são suas peças");
-                    }
-                } else if (jogadorAtual == 2) {
-                    if (posicaoOrigem < 59 || posicaoOrigem > 77) {
-                        System.out.println("Jogador 2: Essas não são suas peças");
-                    }
-                }
-
-                        System.out.println("Para qual posição você deseja ir? (Digite o índice de destino)");
+                    System.out.println("Para qual posição você deseja ir? (Digite o índice de destino)");
                     System.out.println("\nCaso queira atacar, digite 100");
                     int posicaoDestino = sc.nextInt();
 
@@ -77,17 +71,46 @@ public class Main {
                             System.out.println("A posição de origem é inválida.");
                         }
                     }
-                    if (jogadorAtual == 1) {
-                        jogadorAtual = 2;
-                        jogador.setUnidades(jogador.unidadesJogador2);
-                    } else if (jogadorAtual == 2) {
-                        jogadorAtual = 1;
-                        jogador.setUnidades(jogador.unidadesJogador1);
-                    }
+
 
 
 
         } while (true);
     }
 
+    public static Integer mover() {
+
+        System.out.println("Arqueiro: anda 1 ou 2 espaços para frente ou um para o lado;\n" +
+                "Cavalaria: Pode andar para frente, trás, lado esquerdo ou direito\n" +
+                "Arqueiro não pode se mover\n" +
+                "O objetivo final é atacar o castelo");
+
+        System.out.println("\nQual posição deseja mover ou atacar? (Digite o índice da peça).");
+        int posicaoOrigem = sc.nextInt();
+        if (jogadorAtual == 1) {
+            if (posicaoOrigem < 6 || posicaoOrigem > 22) {
+                System.out.println("Jogador 1: Essas não são suas peças");
+                return null;
+            }
+        } else if (jogadorAtual == 2) {
+            if (posicaoOrigem < 59 || posicaoOrigem > 77) {
+                System.out.println("Jogador 2: Essas não são suas peças");
+                return null;
+            }
+        }
+        if (jogadorAtual == 1) {
+            jogadorAtual = 2;
+            jogador.setUnidades(jogador.unidadesJogador2);
+        } else if (jogadorAtual == 2) {
+            jogadorAtual = 1;
+            jogador.setUnidades(jogador.unidadesJogador1);
+        }
+        return posicaoOrigem;
+    }
+
+    public static void defineGanhador(){
+        if(jogador.ganhar() == true){
+            System.out.println("O ganhador é o jogador "+ jogadorAtual);
+        }
+    }
 }
