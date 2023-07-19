@@ -27,12 +27,8 @@ public class Cavalaria extends Unidade {
         return "Cavalaria{} ";
     }
 
-    @Override
-    protected Posicao getPosicao() {
-        return null;
-    }
 
-    public void atacarInfantaria(Campo campo, int posicaoOrigem, int posicaoDestino) {
+    public void atacar(Campo campo, int posicaoOrigem, int posicaoDestino) {
         Posicao posicao = campo.getMovimento(posicaoOrigem);
         Unidade unidadeOrigem = posicao.getUnidade();
 
@@ -89,6 +85,46 @@ public class Cavalaria extends Unidade {
                 System.out.println("Posição de destino inválida.");
             }
         }
+    }
+
+    @Override
+    public void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+        Jogador jogador = new Jogador();
+
+        if (posicaoOrigem.getUnidade() != null) {
+            int posicaoAtual = campo.getPosicao().indexOf(posicaoOrigem);
+
+            // Verifica se a posição de destino é válida
+            if (posicaoDestino >= 0 && posicaoDestino < campo.getPosicao().size()) {
+                Posicao posicaoDestinoUnidade = campo.getMovimento(posicaoDestino);
+
+                if (posicaoOrigem.getUnidade() instanceof Cavalaria) {
+
+                    if (posicaoDestinoUnidade.getUnidade() == null) {
+
+                        if (posicaoDestino == (posicaoAtual + 6) ||
+                                posicaoDestino == (posicaoAtual - 1) ||
+                                posicaoDestino == (posicaoAtual + 11) ||
+                                posicaoDestino == (posicaoAtual + 12) ||
+                                posicaoDestino == (posicaoAtual + 13) ||
+                                posicaoDestino == (posicaoAtual + 18) ||
+                                posicaoDestino == (posicaoAtual - 6) ||
+                                posicaoDestino == (posicaoAtual + 1) ||
+                                posicaoDestino == (posicaoAtual - 11) ||
+                                posicaoDestino == (posicaoAtual - 12) ||
+                                posicaoDestino == (posicaoAtual - 13) ||
+                                posicaoDestino == (posicaoAtual - 18)) {
+                            // Executa movimento
+                            Unidade unidade = posicaoOrigem.getUnidade();
+                            posicaoDestinoUnidade.setUnidade(unidade);
+                            posicaoOrigem.setUnidade(null);
+                            jogador.unidadesJogador1.remove(posicaoOrigem);
+                        }
+                    }
+                            }
+                        }
+                    }
+
     }
 }
 

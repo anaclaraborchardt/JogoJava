@@ -1,27 +1,33 @@
 import java.util.ArrayList;
 
-public class Tesouro extends Unidade {
+public class Tesouro extends Unidade{
 
     public Tesouro(){
 
     }
 
-    @Override
     public ArrayList<Posicao> movimentos(Campo campo) {
         return null;
     }
 
-    @Override
     public ArrayList<Posicao> defesa(Campo campo) {
         return null;
     }
 
-    @Override
     protected Posicao getPosicao() {
         return null;
     }
 
     @Override
+    public void atacar(Campo campo, int posicaoOrigem, int posicaoDestino) {
+
+    }
+
+    @Override
+    public void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+
+    }
+
     public String toString() {
         return "Tesouro{} " ;
     }

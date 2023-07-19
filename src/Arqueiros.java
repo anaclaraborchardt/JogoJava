@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class Arqueiros extends Unidade{
 
-    private int distancia;
-
     public Arqueiros(){
         tipoDanos.add("flecha");
     }
@@ -24,11 +22,8 @@ public class Arqueiros extends Unidade{
     }
 
     @Override
-    protected Posicao getPosicao() {
-        return null;
-    }
+    public void atacar(Campo campo, int posicaoOrigem, int posicaoDestino) {
 
-    public void atacarInfantariaCavalaria(Campo campo, int posicaoOrigem, int posicaoDestino){
         Posicao posicao = campo.getMovimento(posicaoOrigem);
         Unidade unidadeOrigem = posicao.getUnidade();
 
@@ -47,5 +42,24 @@ public class Arqueiros extends Unidade{
                 }
             }
         }
+    }
+
+    @Override
+    public void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+        Jogador jogador = new Jogador();
+        // Verifica se a posição de origem tem unidade
+        if (posicaoOrigem.getUnidade() != null) {
+            int posicaoAtual = campo.getPosicao().indexOf(posicaoOrigem);
+
+            // Verifica se a posição de destino é válida
+            if (posicaoDestino >= 0 && posicaoDestino < campo.getPosicao().size()) {
+                Posicao posicaoDestinoUnidade = campo.getMovimento(posicaoDestino);
+
+                if (posicaoOrigem.getUnidade() instanceof Cavalaria) {
+                    System.out.println("Arqueiro não pode se mover");
+                }
+            }
+        }
+
     }
 }
