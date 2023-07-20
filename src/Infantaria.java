@@ -114,4 +114,9 @@ public class Infantaria extends Unidade{
         }
     }
 
+    @Override
+    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+
+    }
+
 }

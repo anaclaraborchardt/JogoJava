@@ -8,33 +8,34 @@ public class Main {
         Campo campo = new Campo();
         Jogador jogador = new Jogador();
         int jogadorAtual = 1;
-
-        Infantaria infantaria = new Infantaria();
         Cavalaria cavalaria = new Cavalaria();
+        Infantaria infantaria = new Infantaria();
         Arqueiros arqueiros = new Arqueiros();
 
         do {
-
             System.out.println("Jogador " + jogadorAtual);
             System.out.println(jogadorAtual == 1 ? jogador.unidadesJogador1 : jogador.unidadesJogador2);
             campo.imprimirJogo();
 
-            //implementar a rodada
-            System.out.println("Qual posição deseja mover? (Digite o índice da peça).");
-            int posicaoOrigem = sc.nextInt();
-                if(jogadorAtual == 1) {
-                    if (posicaoOrigem < 6 || posicaoOrigem > 22) {
-                        System.out.println("Jogador 1: Essas não são suas peças");
-                    }
-                } else if (jogadorAtual == 2) {
-                    if (posicaoOrigem < 59 || posicaoOrigem > 77) {
-                        System.out.println("Jogador 2: Essas não são suas peças");
-                    }
-                }
+            boolean escolhaValida = false;
+            int posicaoOrigem;
 
-                        System.out.println("Para qual posição você deseja ir? (Digite o índice de destino)");
-                    System.out.println("\nCaso queira atacar, digite 100");
-                    int posicaoDestino = sc.nextInt();
+            do {
+                System.out.println("Qual posição deseja mover? (Digite o índice da peça).");
+                posicaoOrigem = sc.nextInt();
+
+                ArrayList<Integer> validIndices = jogador.pegaIndice(jogadorAtual);
+                if (!validIndices.contains(posicaoOrigem)) {
+                    System.out.println("Essa não é uma de suas peças");
+                    System.out.println("Escolha outra posição: ");
+                } else {
+                    escolhaValida = true;
+                }
+            } while (!escolhaValida);
+
+            System.out.println("Para qual posição você deseja ir? (Digite o índice de destino)");
+            System.out.println("\nCaso queira atacar, digite 100");
+            int posicaoDestino = sc.nextInt();
 
                     if (posicaoDestino == 100) {
                         System.out.println("Qual a peca que deseja atacar 1- Infant; 2- Caval");
@@ -73,6 +74,7 @@ public class Main {
                             cavalaria.mover(campo, posicaoOrigemObj, posicaoDestino);
                             infantaria.mover(campo, posicaoOrigemObj, posicaoDestino);
                             arqueiros.mover(campo, posicaoOrigemObj, posicaoDestino);
+                            jogador.atualizaIndices(jogadorAtual, posicaoOrigem, posicaoDestino);
                         } else {
                             System.out.println("A posição de origem é inválida.");
                         }
@@ -88,6 +90,17 @@ public class Main {
 
 
         } while (true);
+    }
+    public static void confereVencedor(Jogador jogador1, Jogador jogador2) {
+        if (!jogador1.aindaHaPecas(1) && !jogador2.aindaHaPecas(2)) {
+            System.out.println("Empate! Ambos os jogadores ficaram sem peças.");
+        } else if (!jogador1.aindaHaPecas(1)) {
+            System.out.println("Jogador 2 venceu! Jogador 1 ficou sem peças.");
+        } else if (!jogador2.aindaHaPecas(2)) {
+            System.out.println("Jogador 1 venceu! Jogador 2 ficou sem peças.");
+        } else {
+            System.out.println("O jogo ainda não terminou. Ambos os jogadores têm peças.");
+        }
     }
 
 }

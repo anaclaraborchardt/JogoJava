@@ -126,6 +126,11 @@ public class Cavalaria extends Unidade {
                     }
 
     }
+
+    @Override
+    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+
+    }
 }
 
 

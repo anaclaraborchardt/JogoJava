@@ -22,6 +22,8 @@ public abstract class Unidade {
 
     public abstract void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino);
 
+    public abstract void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino);
+
     public void setTipoDano(int tipoDano) {
         this.tipoDano = tipoDano;
     }

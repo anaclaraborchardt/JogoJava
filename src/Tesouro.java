@@ -28,6 +28,11 @@ public class Tesouro extends Unidade{
 
     }
 
+    @Override
+    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+
+    }
+
     public String toString() {
         return "Tesouro{} " ;
     }
