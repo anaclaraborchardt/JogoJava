@@ -22,14 +22,12 @@ public class Cavalaria extends Unidade {
                 Posicao posicaoDestinoAtaque = campo.getMovimento(posicaoDestino);
 
                 if (posicaoDestinoAtaque.getUnidade() instanceof Infantaria) {
-                    System.out.println("Unidade de infantaria encontrada.");
 
                     // O dano 1 é o coice e ele só remove a unidade que está atrás
                     if (getTipoDano() == 1) {
                         int posicaoFrente = posicaoOrigem - 6;
                         Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoFrente);
                         if (posicaoFrenteUnidade.getUnidade() instanceof Infantaria) {
-                            System.out.println("Infantaria encontrada na posição à frente.");
 
                             // Realiza o ataque
                             posicaoDestinoAtaque.setUnidade(unidadeOrigem);
@@ -39,7 +37,6 @@ public class Cavalaria extends Unidade {
                             Unidade cavalaria = unidadeOrigem;
                             posicaoDestinoAtaque.setUnidade(cavalaria);
 
-                            System.out.println("Infantaria atacada");
                         }
 
                         //o dano 2 é pisoteado e só remove a unidade da frente
@@ -48,7 +45,6 @@ public class Cavalaria extends Unidade {
                         Posicao posicaoFrenteUnidade2 = campo.getMovimento(posicaoFrente2);
 
                         if (posicaoFrenteUnidade2.getUnidade() instanceof Infantaria) {
-                            System.out.println("Infantaria encontrada na posição à frente.");
 
                             // Realiza o ataque
                             posicaoDestinoAtaque.setUnidade(unidadeOrigem);
@@ -59,16 +55,19 @@ public class Cavalaria extends Unidade {
                             posicaoDestinoAtaque.setUnidade(cavalaria);
                             setAtaque(true);
 
-                            System.out.println("Infantaria atacada");
                         }
                     } else {
-                        System.out.println("Tipo de dano inválido.");
                     }
-                } else {
-                    System.out.println("Posição de destino não contém uma unidade de infantaria.");
+                } else if (posicaoDestinoAtaque.getUnidade() instanceof Tesouro) {
+                    Tesouro tesouro = new Tesouro();
+                    Jogador jogador = new Jogador();
+                    if(Main.jogadorAtual ==1){
+                        jogador.unidadesJogador2.remove(tesouro);
+                    }else{
+                        jogador.unidadesJogador1.remove(tesouro);
+                    }
                 }
             } else {
-                System.out.println("Posição de destino inválida.");
             }
         }
     }
