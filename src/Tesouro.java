@@ -6,18 +6,6 @@ public class Tesouro extends Unidade{
 
     }
 
-    public ArrayList<Posicao> movimentos(Campo campo) {
-        return null;
-    }
-
-    public ArrayList<Posicao> defesa(Campo campo) {
-        return null;
-    }
-
-    protected Posicao getPosicao() {
-        return null;
-    }
-
     @Override
     public void atacar(Campo campo, int posicaoOrigem, int posicaoDestino) {
 
@@ -29,7 +17,7 @@ public class Tesouro extends Unidade{
     }
 
     @Override
-    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+    public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
 
     }
 

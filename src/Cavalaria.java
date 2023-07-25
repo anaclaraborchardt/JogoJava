@@ -3,23 +3,8 @@ import java.util.ArrayList;
 public class Cavalaria extends Unidade {
 
     public Cavalaria() {
-        tipoDanos.add("Coice");
-        tipoDanos.add("Pisoteado");
-        tipoDano = this.tipoDano;
-    }
-
-    @Override
-    public ArrayList<Posicao> movimentos(Campo campo) {
-        ArrayList<Posicao> movimentos = new ArrayList<>();
-        for (Posicao posicao : campo.getPosicao()) {
-            int indice = campo.getPosicao().indexOf(posicao);
-        }
-        return movimentos;
-    }
-
-    @Override
-    public ArrayList<Posicao> defesa(Campo campo) {
-        return null;
+        adicionarTipoDano("Coice");
+        adicionarTipoDano("Pisoteado");
     }
 
     @Override
@@ -40,7 +25,7 @@ public class Cavalaria extends Unidade {
                     System.out.println("Unidade de infantaria encontrada.");
 
                     // O dano 1 é o coice e ele só remove a unidade que está atrás
-                    if (tipoDano == 1) {
+                    if (getTipoDano() == 1) {
                         int posicaoFrente = posicaoOrigem - 6;
                         Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoFrente);
                         if (posicaoFrenteUnidade.getUnidade() instanceof Infantaria) {
@@ -58,7 +43,7 @@ public class Cavalaria extends Unidade {
                         }
 
                         //o dano 2 é pisoteado e só remove a unidade da frente
-                    } else if (tipoDano == 2) {
+                    } else if (getTipoDano() == 2) {
                         int posicaoFrente2 = posicaoOrigem + 6;
                         Posicao posicaoFrenteUnidade2 = campo.getMovimento(posicaoFrente2);
 
@@ -72,6 +57,7 @@ public class Cavalaria extends Unidade {
 
                             Unidade cavalaria = unidadeOrigem;
                             posicaoDestinoAtaque.setUnidade(cavalaria);
+                            setAtaque(true);
 
                             System.out.println("Infantaria atacada");
                         }
@@ -128,9 +114,22 @@ public class Cavalaria extends Unidade {
     }
 
     @Override
-    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+    public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
 
+        // Verificar se o defensor é uma Cavalaria e o atacante é uma Infantaria
+        if (this instanceof Cavalaria) {
+            if (seDefendendo) {
+                // Defesa bem-sucedida
+                // Aqui você pode adicionar qualquer ação que deseja executar quando a defesa for bem-sucedida.
+            } else {
+                // A peça não é atacada, pois está se defendendo
+                // Reduzir o número de chances de defesa após a defesa
+                setChancesDefesa(getChancesDefesa() - 1);
+            }
+        }
     }
+
+
 }
 
 

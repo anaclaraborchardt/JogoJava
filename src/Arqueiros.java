@@ -3,17 +3,7 @@ import java.util.ArrayList;
 public class Arqueiros extends Unidade{
 
     public Arqueiros(){
-        tipoDanos.add("flecha");
-    }
-
-    @Override
-    public ArrayList<Posicao> movimentos(Campo campo) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Posicao> defesa(Campo campo) {
-        return null;
+        adicionarTipoDano("flecha");;
     }
 
     @Override
@@ -64,7 +54,18 @@ public class Arqueiros extends Unidade{
     }
 
     @Override
-    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+    public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
 
+        // Verificar se o defensor é uma Cavalaria e o atacante é uma Infantaria
+        if (this instanceof Arqueiros) {
+            if (seDefendendo) {
+                // Defesa bem-sucedida
+                // Aqui você pode adicionar qualquer ação que deseja executar quando a defesa for bem-sucedida.
+            } else {
+                // A peça não é atacada, pois está se defendendo
+                // Reduzir o número de chances de defesa após a defesa
+                setChancesDefesa(getChancesDefesa() - 1);
+            }
+        }
     }
 }

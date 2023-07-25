@@ -4,16 +4,11 @@ import java.util.ArrayList;
 
 public class Jogador {
 
-    private int numero;
+    private int jogadorAtual;
     ArrayList<Unidade> unidadesJogador1 = new ArrayList<>();
     ArrayList<Unidade> unidadesJogador2 = new ArrayList<>();
     private ArrayList<Integer> indicesValidosJogador1 = new ArrayList<>();
     private ArrayList<Integer> indicesValidosJogador2 = new ArrayList<>();
-
-    Unidade cavalaria = new Cavalaria();
-    Unidade infantaria = new Infantaria();
-    Unidade arqueiro = new Arqueiros();
-    Unidade tesouro = new Tesouro();
 
     public Jogador() {
 
@@ -44,11 +39,6 @@ public class Jogador {
         }
     }
 
-
-    public int getNumero() {
-        return numero;
-    }
-
     public void setUnidadesJogador1(ArrayList<Unidade> unidadesJogador1) {
         this.unidadesJogador1 = unidadesJogador1;
     }
@@ -67,10 +57,11 @@ public class Jogador {
     }
 
     public void atualizaIndices(int jogadorAtual, int posicaoOrigem, int posicaoDestino) {
-        ArrayList<Integer> validIndices = pegaIndice(jogadorAtual);
-        validIndices.remove(Integer.valueOf(posicaoOrigem));
-        validIndices.add(posicaoDestino);
+        ArrayList<Integer> indicesValidos = pegaIndice(jogadorAtual);
+        indicesValidos.remove(Integer.valueOf(posicaoOrigem));
+        indicesValidos.add(posicaoDestino);
     }
+
 }
 
 

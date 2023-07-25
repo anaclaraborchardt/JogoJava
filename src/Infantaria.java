@@ -1,27 +1,9 @@
 import java.util.ArrayList;
 
 public class Infantaria extends Unidade{
-
-    int quantidadeCasas;
-    int posicaoMover;
-
     public Infantaria( ){
-        quantidadeCasas= this.quantidadeCasas;
-        posicaoMover = this.posicaoMover;
-        tipoDanos.add("espada");
-        tipoDanos.add("bomba instantânea");
-        tipoDano = this.tipoDano;
-    }
-
-
-    @Override
-    public ArrayList<Posicao> movimentos(Campo campo) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Posicao> defesa(Campo campo) {
-        return null;
+        adicionarTipoDano("espada");
+        adicionarTipoDano("bomba instantânea");
     }
 
     @Override
@@ -41,7 +23,7 @@ public class Infantaria extends Unidade{
                 if (posicaoDestinoAtaque.getUnidade() instanceof Cavalaria) {
 
                     // O dano 1 é a espada e só ataca o que está do lado direito
-                    if (tipoDano == 1) {
+                    if (getTipoDano() == 1) {
                         int posicaoFrente = posicaoOrigem + 1;
                         Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoFrente);
                         if (posicaoFrenteUnidade.getUnidade() instanceof Cavalaria) {
@@ -57,7 +39,7 @@ public class Infantaria extends Unidade{
                         }
 
                         //O dano 2 é a bomba e só ataca o que está do lado esquerdo
-                    } else if (tipoDano == 2) {
+                    } else if (getTipoDano() == 2) {
                         int posicaoFrente2 = posicaoOrigem - 1;
                         Posicao posicaoFrenteUnidade2 = campo.getMovimento(posicaoFrente2);
 
@@ -113,10 +95,21 @@ public class Infantaria extends Unidade{
         }
         }
     }
-
     @Override
-    public void defesa(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
+    public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
+        Unidade unidadeAtacante = campo.getMovimento(posicaoAtaque).getUnidade();
 
+        // Verificar se o defensor é uma Cavalaria e o atacante é uma Infantaria
+        if (this instanceof Infantaria) {
+            if (seDefendendo) {
+                // Defesa bem-sucedida
+                // Aqui você pode adicionar qualquer ação que deseja executar quando a defesa for bem-sucedida.
+            } else {
+                // A peça não é atacada, pois está se defendendo
+                // Reduzir o número de chances de defesa após a defesa
+                setChancesDefesa(getChancesDefesa() - 1);
+            }
+        }
     }
 
 }
