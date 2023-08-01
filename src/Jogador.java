@@ -9,6 +9,9 @@ public class Jogador {
     ArrayList<Unidade> unidadesJogador2 = new ArrayList<>();
     private ArrayList<Integer> indicesValidosJogador1 = new ArrayList<>();
     private ArrayList<Integer> indicesValidosJogador2 = new ArrayList<>();
+    private int quantidadePecasRestantes1;
+    private int quantidadePecasRestantes2;
+    private boolean removerPeca;
 
     public Jogador() {
 
@@ -47,9 +50,26 @@ public class Jogador {
         this.unidadesJogador2 = unidadesJogador2;
     }
 
-    public boolean aindaHaPecas(int jogadorAtual) {
-        ArrayList<Unidade> unidadesJogador = jogadorAtual == 1 ? unidadesJogador1 : unidadesJogador2;
-        return !unidadesJogador.isEmpty();
+    public boolean isRemoverPeca() {
+        return removerPeca;
+    }
+
+    public void setRemoverPeca(boolean removerPeca) {
+        this.removerPeca = removerPeca;
+    }
+    public int getQuantidadePecasRestantes1() {
+        return quantidadePecasRestantes1;
+    }
+
+    public void setQuantidadePecasRestantes1(int quantidadePecasRestantes1) {
+        this.quantidadePecasRestantes1 = quantidadePecasRestantes1;
+    }
+    public int getQuantidadePecasRestantes2() {
+        return quantidadePecasRestantes2;
+    }
+
+    public void setQuantidadePecasRestantes2(int quantidadePecasRestantes2) {
+        this.quantidadePecasRestantes2 = quantidadePecasRestantes2;
     }
 
     public ArrayList<Integer> pegaIndice(int jogadorAtual) {
@@ -60,6 +80,16 @@ public class Jogador {
         ArrayList<Integer> indicesValidos = pegaIndice(jogadorAtual);
         indicesValidos.remove(Integer.valueOf(posicaoOrigem));
         indicesValidos.add(posicaoDestino);
+    }
+
+    public static void removePeca(Jogador jogador1, Jogador jogador2){
+        if(jogador1.isRemoverPeca() == true){
+            if(Main.jogadorAtual == 1){
+                jogador1.setQuantidadePecasRestantes1(jogador1.getQuantidadePecasRestantes1()-1);
+            }else{
+                jogador2.setQuantidadePecasRestantes2(jogador2.getQuantidadePecasRestantes2()-1);
+            }
+        }
     }
 
 }

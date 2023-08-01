@@ -8,12 +8,14 @@ public class Main {
     static Arqueiros arqueiros = new Arqueiros();
     static int jogadorAtual = 1;
     static Jogador jogador = new Jogador();
+    static Jogador jogador1 = new Jogador();
+    static Jogador jogador2 = new Jogador();
+    static boolean jogoAcabou;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Campo campo = new Campo();
 
-        boolean jogoAcabou;
         do {
             System.out.println("Jogador " + jogadorAtual);
             System.out.println(jogadorAtual == 1 ? jogador.unidadesJogador1 : jogador.unidadesJogador2);
@@ -26,8 +28,8 @@ public class Main {
                 System.out.println("Qual posição deseja mover? (Digite o índice da peça).");
                 posicaoOrigem = sc.nextInt();
 
-                ArrayList<Integer> validIndices = jogador.pegaIndice(jogadorAtual);
-                if (!validIndices.contains(posicaoOrigem)) {
+                ArrayList<Integer> indicesValidos = jogador.pegaIndice(jogadorAtual);
+                if (!indicesValidos.contains(posicaoOrigem)) {
                     System.out.println("Essa não é uma de suas peças");
                     System.out.println("Escolha outra posição: ");
                 } else {
@@ -45,6 +47,11 @@ public class Main {
                 System.out.println("Qual a posição da peça que deseja atacar? ");
                 int posicaoPecaAtaque = sc.nextInt();
 
+                ArrayList<Integer> indicesValidos = jogador.pegaIndice(jogadorAtual);
+                if (!indicesValidos.contains(posicaoPecaAtaque)) {
+                    System.out.println("Você não pode atacar uma de suas peças!");
+                }
+
                 if(unidadeOrigem instanceof Infantaria) {
 
                     System.out.println("Qual dano você quer utilizar? \n");
@@ -53,6 +60,7 @@ public class Main {
                     infantaria.setTipoDano(tipoDano);
 
                     infantaria.atacar(campo, posicaoOrigem, posicaoPecaAtaque);
+                    jogador.setRemoverPeca(true);
 
                     if (cavalaria.getChancesDefesa() > 0) {
                         cavalaria.defesa(campo, posicaoOrigem, posicaoPecaAtaque, true);
@@ -70,7 +78,7 @@ public class Main {
 
                     cavalaria.atacar(campo, posicaoOrigem, posicaoPecaAtaque);
 
-                    if (cavalaria.getChancesDefesa() > 0) {
+                    if (infantaria.getChancesDefesa() > 0) {
                         infantaria.defesa(campo, posicaoOrigem, posicaoPecaAtaque, true);
                     } else {
                         System.out.println("A Cavalaria não tem mais chances de defesa!");
@@ -105,21 +113,18 @@ public class Main {
                 jogadorAtual = 1;
                 jogador.setUnidades(jogador.unidadesJogador1);
             }
-            jogoAcabou = !jogador.aindaHaPecas(1) || !jogador.aindaHaPecas(2);
 
+        } while (jogoAcabou != true);
 
-        } while (!jogoAcabou);
-        confereVencedor(jogador);
+        confereVencedor(jogador1, jogador2);
     }
-    public static void confereVencedor(Jogador jogador) {
-        if (!jogador.aindaHaPecas(1) && !jogador.aindaHaPecas(2)) {
-            System.out.println("Empate! Ambos os jogadores ficaram sem peças.");
-        } else if (!jogador.aindaHaPecas(1)) {
-            System.out.println("Jogador 2 venceu! Jogador 1 ficou sem peças.");
-        } else if (!jogador.aindaHaPecas(2)) {
-            System.out.println("Jogador 1 venceu! Jogador 2 ficou sem peças.");
-        } else {
-            System.out.println("O jogo ainda não terminou. Ambos os jogadores têm peças.");
+    public static void confereVencedor(Jogador jogador1, Jogador jogador2) {
+        if(jogador1.getQuantidadePecasRestantes1()==0){
+            System.out.println("Jogador 2 venceu!");
+            jogoAcabou = true;
+        }else if(jogador2.getQuantidadePecasRestantes2()==0){
+            System.out.println("Jogador1 venceu!");
+            jogoAcabou = true;
         }
     }
 

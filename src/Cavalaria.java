@@ -115,11 +115,9 @@ public class Cavalaria extends Unidade {
     @Override
     public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
 
-        // Verificar se o defensor é uma Cavalaria e o atacante é uma Infantaria
         if (this instanceof Cavalaria) {
-            if (seDefendendo) {
-                // Defesa bem-sucedida
-                // Aqui você pode adicionar qualquer ação que deseja executar quando a defesa for bem-sucedida.
+            if (!seDefendendo) {
+                atacar(campo, posicaoOrigem, posicaoAtaque);
             } else {
                 // A peça não é atacada, pois está se defendendo
                 // Reduzir o número de chances de defesa após a defesa
