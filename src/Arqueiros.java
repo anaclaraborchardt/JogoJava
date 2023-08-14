@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-
-public class Arqueiros extends Unidade{
+public class Arqueiros extends UnidadeMovel {
 
     public Arqueiros(){
         adicionarTipoDano("flecha");;
@@ -36,7 +34,6 @@ public class Arqueiros extends Unidade{
 
     @Override
     public void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
-        Jogador jogador = new Jogador();
         // Verifica se a posição de origem tem unidade
         if (posicaoOrigem.getUnidade() != null) {
             int posicaoAtual = campo.getPosicao().indexOf(posicaoOrigem);
@@ -53,16 +50,4 @@ public class Arqueiros extends Unidade{
 
     }
 
-    @Override
-    public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
-
-        // Verificar se o defensor é uma Cavalaria e o atacante é uma Infantaria
-        if (this instanceof Arqueiros) {
-            if (!seDefendendo) {
-                atacar(campo, posicaoOrigem, posicaoAtaque);
-            } else {
-                setChancesDefesa(getChancesDefesa() - 1);
-            }
-        }
-    }
 }

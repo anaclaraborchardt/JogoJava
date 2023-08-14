@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-
-public class Cavalaria extends Unidade {
+public class Cavalaria extends UnidadeMovel {
 
     public Cavalaria() {
         adicionarTipoDano("Coice");
@@ -17,64 +15,39 @@ public class Cavalaria extends Unidade {
         Posicao posicao = campo.getMovimento(posicaoOrigem);
         Unidade unidadeOrigem = posicao.getUnidade();
 
-        if (unidadeOrigem instanceof Cavalaria) {
-            if (posicaoDestino >= 0 && posicaoDestino < campo.getPosicao().size()) {
-                Posicao posicaoDestinoAtaque = campo.getMovimento(posicaoDestino);
+        if (posicaoDestino >= 0 && posicaoDestino < campo.getPosicao().size()) {
+            Posicao posicaoDestinoAtaque = campo.getMovimento(posicaoDestino);
 
-                if (posicaoDestinoAtaque.getUnidade() instanceof Infantaria) {
+            if (posicaoDestinoAtaque.getUnidade() instanceof Infantaria) {
 
-                    // O dano 1 é o coice e ele só remove a unidade que está atrás
-                    if (getTipoDano() == 1) {
-                        int posicaoFrente = posicaoOrigem - 6;
-                        Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoFrente);
-                        if (posicaoFrenteUnidade.getUnidade() instanceof Infantaria) {
-
-                            // Realiza o ataque
-                            posicaoDestinoAtaque.setUnidade(unidadeOrigem);
-                            posicao.setUnidade(null);
-                            posicaoFrenteUnidade.setUnidade(null);
-
-                            Unidade cavalaria = unidadeOrigem;
-                            posicaoDestinoAtaque.setUnidade(cavalaria);
-
-                        }
-
-                        //o dano 2 é pisoteado e só remove a unidade da frente
-                    } else if (getTipoDano() == 2) {
-                        int posicaoFrente2 = posicaoOrigem + 6;
-                        Posicao posicaoFrenteUnidade2 = campo.getMovimento(posicaoFrente2);
-
-                        if (posicaoFrenteUnidade2.getUnidade() instanceof Infantaria) {
-
-                            // Realiza o ataque
-                            posicaoDestinoAtaque.setUnidade(unidadeOrigem);
-                            posicao.setUnidade(null);
-                            posicaoFrenteUnidade2.setUnidade(null);
-
-                            Unidade cavalaria = unidadeOrigem;
-                            posicaoDestinoAtaque.setUnidade(cavalaria);
-                            setAtaque(true);
-
-                        }
-                    } else {
-                    }
-                } else if (posicaoDestinoAtaque.getUnidade() instanceof Tesouro) {
-                    Tesouro tesouro = new Tesouro();
-                    Jogador jogador = new Jogador();
-                    if(Main.jogadorAtual ==1){
-                        jogador.unidadesJogador2.remove(tesouro);
-                    }else{
-                        jogador.unidadesJogador1.remove(tesouro);
-                    }
+                int posicaoInt = 6;
+                // O dano 1 é o coice e ele só remove a unidade que está atrás
+                if (getTipoDano() == 1) {
+                    posicaoInt = -6;
                 }
-            } else {
+                Posicao posicaoFrenteUnidade = campo.getMovimento(posicaoInt);
+                if (posicaoFrenteUnidade.getUnidade() instanceof Infantaria) {
+
+                    // Realiza o ataque
+                    posicaoDestinoAtaque.setUnidade(unidadeOrigem);
+                    posicao.setUnidade(null);
+                    posicaoFrenteUnidade.setUnidade(null);
+
+                    Unidade cavalaria = unidadeOrigem;
+                    posicaoDestinoAtaque.setUnidade(cavalaria);
+
+                }
+            } else if (posicaoDestinoAtaque.getUnidade() instanceof Tesouro) {
+                Jogador jogador = Main.jogadores.get(Main.jogadorAtual -1);
+                    jogador.unidades.remove(posicaoDestinoAtaque.getUnidade());
             }
         }
+
     }
 
     @Override
     public void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
-        Jogador jogador = new Jogador();
+//        Jogador jogador = new Jogador();
 
         if (posicaoOrigem.getUnidade() != null) {
             int posicaoAtual = campo.getPosicao().indexOf(posicaoOrigem);
@@ -103,28 +76,14 @@ public class Cavalaria extends Unidade {
                             Unidade unidade = posicaoOrigem.getUnidade();
                             posicaoDestinoUnidade.setUnidade(unidade);
                             posicaoOrigem.setUnidade(null);
-                            jogador.unidadesJogador1.remove(posicaoOrigem);
                         }
                     }
-                            }
-                        }
-                    }
-
-    }
-
-    @Override
-    public void defesa(Campo campo, int posicaoOrigem, int posicaoAtaque, boolean seDefendendo) {
-
-        if (this instanceof Cavalaria) {
-            if (!seDefendendo) {
-                atacar(campo, posicaoOrigem, posicaoAtaque);
-            } else {
-                // A peça não é atacada, pois está se defendendo
-                // Reduzir o número de chances de defesa após a defesa
-                setChancesDefesa(getChancesDefesa() - 1);
+                }
             }
         }
+
     }
+
 
 
 }
