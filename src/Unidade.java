@@ -6,6 +6,7 @@ public abstract class Unidade {
     private int chancesDefesa = 1;
     private boolean ataque;
     private ArrayList<String> tipoDanos = new ArrayList<>();
+    private String simbolo;
 
     @Override
     public String toString() {
@@ -36,12 +37,11 @@ public abstract class Unidade {
         tipoDanos.add(tipoDano);
     }
 
-    public boolean isAtaque() {
-        return ataque;
+    public String getSimbolo() {
+        return simbolo;
     }
 
-    public void setAtaque(boolean ataque) {
-        this.ataque = ataque;
+    public void setSimbolo(String simbolo) {
+        this.simbolo = simbolo;
     }
-
 }

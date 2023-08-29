@@ -18,4 +18,13 @@ public abstract class UnidadeMovel extends Unidade {
         return ("Sua  "+ this.getClass().getSimpleName() + " peça ainda tem defesa");
     }
 
+    @Override
+    public String getSimbolo() {
+        return super.getSimbolo();
+    }
+
+    @Override
+    public void setSimbolo(String simbolo) {
+        super.setSimbolo(simbolo);
+    }
 }

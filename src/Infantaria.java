@@ -74,5 +74,10 @@ public class Infantaria extends UnidadeMovel {
         }
     }
 
+    @Override
+    public void setSimbolo(String simbolo) {
+        super.setSimbolo("I");
+    }
+
 
 }

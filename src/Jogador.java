@@ -2,16 +2,12 @@ import java.util.ArrayList;
 
 public class Jogador {
 
-    private int jogadorAtual;
     ArrayList<Unidade> unidades = new ArrayList<>();
-//    ArrayList<Unidade> unidadesJogador2 = new ArrayList<>();
     private ArrayList<Integer> indicesValidosJogador = new ArrayList<>();
-//    private ArrayList<Integer> indicesValidosJogador2 = new ArrayList<>();
     private int quantidadePecasRestantes = 18;
-//    private int quantidadePecasRestantes2 = 18;
     private boolean removerPeca;
 
-    public Jogador(int numeroJogador) {
+    public Jogador(int numeroJogador, String nome) {
 
         for (int i = 0; i <= 1; i++) {
             unidades.add(new Tesouro());
@@ -36,20 +32,12 @@ public class Jogador {
         }
     }
 
-    public void setUnidades(ArrayList<Unidade> unidades) {
-        this.unidades = unidades;
-    }
-
     public void setRemoverPeca(boolean removerPeca) {
         this.removerPeca = removerPeca;
     }
 
     public int getQuantidadePecasRestantes() {
         return quantidadePecasRestantes;
-    }
-
-    public void setQuantidadePecasRestantes(int quantidadePecasRestantes) {
-        this.quantidadePecasRestantes = quantidadePecasRestantes;
     }
 
     public void atualizaIndices(int jogadorAtual, int posicaoOrigem, int posicaoDestino) {
@@ -61,6 +49,11 @@ public class Jogador {
     public ArrayList<Integer> getIndicesValidosJogador() {
         return indicesValidosJogador;
     }
+
+//    public static ArrayList<Jogador> adicionaJogador(){
+//
+//    }
+
 }
 
 

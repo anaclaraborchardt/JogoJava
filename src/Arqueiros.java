@@ -49,5 +49,9 @@ public class Arqueiros extends UnidadeMovel {
         }
 
     }
+    @Override
+    public void setSimbolo(String simbolo) {
+        super.setSimbolo("A");
+    }
 
 }

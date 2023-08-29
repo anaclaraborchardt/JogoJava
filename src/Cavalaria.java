@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+
 public class Cavalaria extends UnidadeMovel {
+
+    private ArrayList<Integer> listaPosicoesDestino = new ArrayList<>();
 
     public Cavalaria() {
         adicionarTipoDano("Coice");
@@ -49,6 +53,7 @@ public class Cavalaria extends UnidadeMovel {
     public void mover(Campo campo, Posicao posicaoOrigem, int posicaoDestino) {
 //        Jogador jogador = new Jogador();
 
+
         if (posicaoOrigem.getUnidade() != null) {
             int posicaoAtual = campo.getPosicao().indexOf(posicaoOrigem);
 
@@ -72,6 +77,8 @@ public class Cavalaria extends UnidadeMovel {
                                 posicaoDestino == (posicaoAtual - 12) ||
                                 posicaoDestino == (posicaoAtual - 13) ||
                                 posicaoDestino == (posicaoAtual - 18)) {
+                            listaPosicoesDestino.add(posicaoDestino);
+                            setListaPosicoesDestino(listaPosicoesDestino);
                             // Executa movimento
                             Unidade unidade = posicaoOrigem.getUnidade();
                             posicaoDestinoUnidade.setUnidade(unidade);
@@ -84,8 +91,18 @@ public class Cavalaria extends UnidadeMovel {
 
     }
 
+    @Override
+    public void setSimbolo(String simbolo) {
+        super.setSimbolo("C");
+    }
 
+    public ArrayList<Integer> getListaPosicoesDestino() {
+        return listaPosicoesDestino;
+    }
 
+    public void setListaPosicoesDestino(ArrayList<Integer> listaPosicoesDestino) {
+        this.listaPosicoesDestino = listaPosicoesDestino;
+    }
 }
 
 
